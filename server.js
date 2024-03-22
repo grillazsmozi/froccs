@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = 3000;
+const port = '3000';
+const ip = '192.168.1.115';
 
 // Dummy data for players
 let players = [];
@@ -71,35 +72,7 @@ app.get('/admin', (req, res) => {
 app.get('/player/:username', (req, res) => {
     const player = players.find(p => p.name === req.params.username);
     if (!player) {
-        res.send(`
-        <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fröccs KASSZA | by LevyProductions
-    </title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
-<body>
-    <div style="display: flex; align-items: center; justify-content: center;">
-        <form action="/login" method="post">
-        <div class="alert alert-danger" role="alert">
-  Nem található felhasználó. Értesítsd a felület adminisztrátorát játékos hozzáadásához!
-</div>
-
-            <label for="user">Játékosnév <i>(A játékosnevet az adminisztrátor tudja regisztrálni!)</i></label>
-            <input type="text" name="username" placeholder="Pl.: tesztbela" class="form-control" id="user">
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
-</html>
-        `)
+        res.sendFile(__dirname + '/errorlogin.html')
     } else {
         res.send(`
         <!DOCTYPE html>
@@ -143,7 +116,7 @@ app.post('/login', (req, res) => {
         if (playerExists) {
             res.redirect(`/player/${username}`);
         } else {
-            res.send('Player not found');
+            res.sendFile(__dirname + '/errorlogin.html')
         }
     }
 });
@@ -164,7 +137,7 @@ app.post('/admin/modify-coins', (req, res) => {
         }
         res.redirect('/admin');
     } else {
-        res.send('Player not found');
+        res.sendFile(__dirname + '/errorlogin.html')
     }
 });
 
@@ -184,6 +157,6 @@ app.post('/admin/add-player', (req, res) => {
     res.redirect('/admin');
 });
 
-app.listen(port, () => {
+app.listen(port, ip, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
