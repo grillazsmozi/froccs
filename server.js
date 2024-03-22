@@ -157,6 +157,6 @@ app.post('/admin/add-player', (req, res) => {
     res.redirect('/admin');
 });
 
-app.listen(port, ip, () => {
+app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
