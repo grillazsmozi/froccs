@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/login.html');
 });
 
-// Admin page
+// Admin page e
 app.get('/admin', (req, res) => {
     res.send(`
     <!DOCTYPE html>
