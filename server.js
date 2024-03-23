@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const port = '3000';
-const ip = '192.168.1.115';
+const ip = '192.168.0.23' || '192.168.1.115';
 
 // Dummy data for players
 let players = [];
@@ -53,7 +53,7 @@ app.get('/admin', (req, res) => {
                             </form>
                             <form action="/admin/delete-player" method="post">
                                 <input type="hidden" name="username" value="${player.name}">
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger">Kidobás</button>
                             </form>
                         </td>
                     </tr>
@@ -157,6 +157,11 @@ app.post('/admin/add-player', (req, res) => {
     res.redirect('/admin');
 });
 
-app.listen(port, () => {
+/*app.listen(port, ip, () => {
     console.log(`Server is running on http://localhost:${port}`);
+});*/
+
+
+app.listen(port, () => {
+    console.log(`Server is running on http://froccs.onrender.com:${port}`);
 });
